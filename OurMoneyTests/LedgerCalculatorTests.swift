@@ -15,7 +15,7 @@ final class LedgerCalculatorTests: XCTestCase {
                     deleted: Bool = false,
                     splits: [SplitAmount] = [],
                     method: SplitMethod = .equal) -> Transaction {
-        Transaction(
+        var tx = Transaction(
             amountPaise: amountPaise,
             category: "Food",
             paidBy: paidBy,
@@ -23,9 +23,10 @@ final class LedgerCalculatorTests: XCTestCase {
             personal: personal,
             splitMethod: method,
             splits: splits,
-            type: type,
-            isDeleted: deleted
+            type: type
         )
+        tx.isDeleted = deleted
+        return tx
     }
 
     func testSpecExample_rupees2000_devanshu1200_friend800() {
