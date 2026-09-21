@@ -1,0 +1,76 @@
+name: Build OurMoney IPA
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate app icon
+        run: python3 OurMoney_iOS/tools/generate_icon.py
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        working-directory: OurMoney_iOS
+        run: xcodegen generate
+
+      - name: Show Xcode version
+        run: xcodebuild -version
+
+      - name: Run unit tests (logic)
+        working-directory: OurMoney_iOS
+        run: |
+          set -o pipefail
+          xcodebuild test \
+            -project OurMoney.xcodeproj \
+            -scheme OurMoney \
+            -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
+            -quiet | tail -100
+
+      - name: Build device archive (unsigned)
+        working-directory: OurMoney_iOS
+        run: |
+          set -o pipefail
+          xcodebuild archive \
+            -project OurMoney.xcodeproj \
+            -scheme OurMoney \
+            -configuration Release \
+            -destination 'generic/platform=iOS' \
+            -archivePath build/OurMoney.xcarchive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            AD_HOC_CODE_SIGNING_ALLOWED=YES \
+            -quiet
+
+      - name: Package unsigned IPA
+        working-directory: OurMoney_iOS/build
+        run: |
+          mkdir -p Payload
+          cp -R OurMoney.xcarchive/Products/Applications/OurMoney.app Payload/
+          zip -qry OurMoney.ipa Payload
+          ls -la OurMoney.ipa
+          unzip -l OurMoney.ipa | head -20
+
+      - name: Verify IPA structure
+        working-directory: OurMoney_iOS/build
+        run: |
+          test -f Payload/OurMoney.app/OurMoney || (echo "Binary missing" && exit 1)
+          test -f Payload/OurMoney.app/Info.plist || (echo "Info.plist missing" && exit 1)
+          file Payload/OurMoney.app/OurMoney | grep -q arm64 || (echo "Not an arm64 device binary" && exit 1)
+          echo "IPA structure verified"
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: OurMoney-unsigned-ipa
+          path: OurMoney_iOS/build/OurMoney.ipa
+          if-no-files-found: error

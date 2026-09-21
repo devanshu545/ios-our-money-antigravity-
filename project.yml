@@ -1,0 +1,56 @@
+name: OurMoney
+options:
+  bundleIdPrefix: com.devanshu
+  deploymentTarget:
+    iOS: "16.0"
+  createIntermediateGroups: true
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "1.0"
+    CURRENT_PROJECT_VERSION: "1"
+    DEVELOPMENT_TEAM: ""
+    CODE_SIGN_STYLE: Automatic
+
+targets:
+  OurMoney:
+    type: application
+    platform: iOS
+    sources:
+      - path: OurMoney
+    info:
+      path: OurMoney/Resources/Info.plist
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.devanshu.ourmoney.ios
+        CODE_SIGN_ENTITLEMENTS: OurMoney/Resources/OurMoney.entitlements
+        GENERATE_INFOPLIST_FILE: NO
+        # GEMINI_API_KEY is injected via the environment at build time
+        # (GitHub Actions secret / local .env). Never hardcode it.
+        GEMINI_API_KEY: $(GEMINI_API_KEY)
+    dependencies:
+      - package: FirebaseiOS
+        products:
+          - FirebaseAuth
+          - FirebaseFirestore
+          - FirebaseFirestoreSwift
+      - package: GoogleSignIn
+        products:
+          - GoogleSignIn
+
+  OurMoneyTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: OurMoneyTests
+    dependencies:
+      - target: OurMoney
+
+packages:
+  FirebaseiOS:
+    url: https://github.com/firebase/firebase-ios-sdk.git
+    from: 11.0.0
+  GoogleSignIn:
+    url: https://github.com/google/GoogleSignIn-iOS.git
+    from: 7.1.0
