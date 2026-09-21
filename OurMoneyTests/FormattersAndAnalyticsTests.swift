@@ -119,9 +119,6 @@ final class FormattersAndAnalyticsTests: XCTestCase {
     }
 
     func testHistorySearchFiltering() {
-        let me = makeUser("me")
-        let household = Household(members: ["me", "partner"])
-        let vm = HistoryViewModel(currentUser: me, household: household)
         // The filter logic runs on published streams; validate the term logic directly here
         // via the same predicate used in the view model.
         let terms = "food 600".lowercased().split(whereSeparator: \.isWhitespace)
