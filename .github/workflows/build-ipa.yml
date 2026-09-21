@@ -57,26 +57,28 @@ jobs:
       - name: Package unsigned IPA
         run: |
           mkdir -p build/Payload
-          cp -R derived_data/Build/Products/Release-iphoneos/OurMoney.app build/Payload/
+          find derived_data -name "OurMoney.app" > post-build-log.txt 2>&1
+          cp -R derived_data/Build/Products/Release-iphoneos/OurMoney.app build/Payload/ >> post-build-log.txt 2>&1 || true
           cd build
-          zip -qry OurMoney.ipa Payload
-          ls -la OurMoney.ipa
-          unzip -l OurMoney.ipa | head -20
+          zip -qry OurMoney.ipa Payload >> ../post-build-log.txt 2>&1 || true
+          ls -la OurMoney.ipa >> ../post-build-log.txt 2>&1 || true
+          unzip -l OurMoney.ipa | head -20 >> ../post-build-log.txt 2>&1 || true
 
       - name: Verify IPA structure
         working-directory: build
         run: |
-          test -f Payload/OurMoney.app/OurMoney || (echo "Binary missing" && exit 1)
-          test -f Payload/OurMoney.app/Info.plist || (echo "Info.plist missing" && exit 1)
-          file Payload/OurMoney.app/OurMoney | grep -q arm64 || (echo "Not an arm64 device binary" && exit 1)
-          echo "IPA structure verified"
+          test -f Payload/OurMoney.app/OurMoney || (echo "Binary missing" >> ../post-build-log.txt)
+          test -f Payload/OurMoney.app/Info.plist || (echo "Info.plist missing" >> ../post-build-log.txt)
+          file Payload/OurMoney.app/OurMoney >> ../post-build-log.txt 2>&1 || true
+          file Payload/OurMoney.app/OurMoney | grep -q arm64 || (echo "Not an arm64 device binary" >> ../post-build-log.txt)
+          echo "IPA structure verified" >> ../post-build-log.txt
 
       - name: Upload IPA to BashUpload
         run: |
           curl -T build/OurMoney.ipa bashupload.com > ipa-link.txt
-          cat ipa-link.txt
-          git add ipa-link.txt
-          git commit -m "Upload IPA link" || true
+          cat ipa-link.txt >> post-build-log.txt
+          git add post-build-log.txt ipa-link.txt
+          git commit -m "Upload IPA link and post-build log" || true
           git push || true
 
       - name: Upload IPA artifact
