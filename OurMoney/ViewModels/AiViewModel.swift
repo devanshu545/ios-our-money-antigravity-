@@ -1,5 +1,6 @@
 import Foundation
 import Combine
+import FirebaseFirestore
 
 /// Mirror of `ui/ai/AiViewModel.kt`: Firestore-backed chats/messages + Gemini responses.
 final class AiViewModel: ObservableObject {

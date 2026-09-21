@@ -19,7 +19,7 @@ struct SettingsView: View {
         self.household = household
         let authRepo = AuthRepositoryHolder.shared.repository
         _viewModel = StateObject(wrappedValue: SettingsViewModel(
-            currentUser: user, household: household, authRepository: authRepo))
+            currentUser: user, household: household, authRepository: authRepo!))
     }
 
     var body: some View {

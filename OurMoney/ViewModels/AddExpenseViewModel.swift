@@ -142,14 +142,15 @@ final class AddExpenseViewModel: ObservableObject {
                         id: txId,
                         amountPaise: amountPaise,
                         category: category,
+                        dateMillis: dateMillis,
                         paidBy: paidBy,
                         createdBy: self.currentUser.id,
                         personal: isPersonal,
                         splitMethod: splitMethod,
                         splits: splits,
                         notes: notes,
-                        paymentMethod: paymentMethod,
-                        dateMillis: dateMillis
+                        type: .expense,
+                        paymentMethod: paymentMethod
                     )
                 }
 

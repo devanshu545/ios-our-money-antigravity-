@@ -28,13 +28,14 @@ final class GoogleSignInService {
             guard let self else { return }
             if let error {
                 // User cancelled or Google failed; keep current state (do not fake sign-in).
-                if (error as NSError).code != GIDSignInErrorCode.canceled.rawValue {
+                if (error as NSError).code != -5 {
                     self.authRepository?.setError(message: error.localizedDescription)
                 }
                 return
             }
             guard let idToken = result?.user.idToken?.tokenString else { return }
-            self.authRepository?.signInWithGoogle(idToken: idToken)
+            let accessToken = result?.user.accessToken.tokenString ?? ""
+            self.authRepository?.signInWithGoogle(idToken: idToken, accessToken: accessToken)
         }
     }
 

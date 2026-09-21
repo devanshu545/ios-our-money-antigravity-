@@ -49,7 +49,8 @@ final class LedgerRepository: ObservableObject {
                 }
                 guard let snapshot else { return }
                 self.sharedTransactions = self.decode(snapshot) { tx, doc in
-                    tx.isPending = doc.metadata.hasPendingWrites()
+                    var tx = tx
+                    tx.isPending = doc.metadata.hasPendingWrites
                     return tx.isDeleted ? nil : tx
                 }
                 self.publishTransactions()
@@ -66,7 +67,8 @@ final class LedgerRepository: ObservableObject {
                 }
                 guard let snapshot else { return }
                 self.personalTransactions = self.decode(snapshot) { tx, doc in
-                    tx.isPending = doc.metadata.hasPendingWrites()
+                    var tx = tx
+                    tx.isPending = doc.metadata.hasPendingWrites
                     return tx.isDeleted ? nil : tx
                 }
                 self.publishTransactions()
@@ -83,7 +85,8 @@ final class LedgerRepository: ObservableObject {
                 }
                 guard let snapshot else { return }
                 self.settlements = self.decode(snapshot) { s, doc in
-                    s.isPending = doc.metadata.hasPendingWrites()
+                    var s = s
+                    s.isPending = doc.metadata.hasPendingWrites
                     return s
                 }
             })
@@ -96,7 +99,8 @@ final class LedgerRepository: ObservableObject {
                 if let error { self.listenError = error.localizedDescription; return }
                 guard let snapshot else { return }
                 self.goals = self.decode(snapshot) { g, doc in
-                    g.isPending = doc.metadata.hasPendingWrites()
+                    var g = g
+                    g.isPending = doc.metadata.hasPendingWrites
                     return g
                 }
                 self.publishGoals()
@@ -109,7 +113,8 @@ final class LedgerRepository: ObservableObject {
                 if let error { self.listenError = error.localizedDescription; return }
                 guard let snapshot else { return }
                 self.personalGoals = self.decode(snapshot) { g, doc in
-                    g.isPending = doc.metadata.hasPendingWrites()
+                    var g = g
+                    g.isPending = doc.metadata.hasPendingWrites
                     return g
                 }
                 self.publishGoals()
@@ -123,7 +128,8 @@ final class LedgerRepository: ObservableObject {
                 if let error { self.listenError = error.localizedDescription; return }
                 guard let snapshot else { return }
                 self.budgets = self.decode(snapshot) { b, doc in
-                    b.isPending = doc.metadata.hasPendingWrites()
+                    var b = b
+                    b.isPending = doc.metadata.hasPendingWrites
                     return b
                 }
                 self.publishBudgets()
@@ -136,7 +142,8 @@ final class LedgerRepository: ObservableObject {
                 if let error { self.listenError = error.localizedDescription; return }
                 guard let snapshot else { return }
                 self.personalBudgets = self.decode(snapshot) { b, doc in
-                    b.isPending = doc.metadata.hasPendingWrites()
+                    var b = b
+                    b.isPending = doc.metadata.hasPendingWrites
                     return b
                 }
                 self.publishBudgets()

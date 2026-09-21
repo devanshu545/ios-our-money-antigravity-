@@ -134,7 +134,7 @@ struct HistoryView: View {
         .popover(isPresented: $showEndDate) {
             DatePicker("To", selection: Binding(get: { filterEnd ?? Date() },
                                                 set: { filterEnd = $0; showEndDate = false }),
-                       in: (filterStart ?? .distantPast)...(),
+                       in: (filterStart ?? .distantPast)...,
                        displayedComponents: .date)
                 .presentationDetents([.fraction(0.3)])
                 .padding()
@@ -162,9 +162,9 @@ struct HistoryView: View {
                         paidBy: settlement.paidBy,
                         createdBy: settlement.createdBy,
                         personal: false,
+                        notes: settlement.notes,
                         type: .transfer,
                         paymentMethod: settlement.paymentMethod,
-                        notes: settlement.notes,
                         isPending: settlement.isPending
                     ),
                     currentUserId: user.id,

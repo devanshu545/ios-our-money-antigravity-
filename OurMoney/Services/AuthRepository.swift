@@ -30,9 +30,9 @@ final class AuthRepository: ObservableObject {
 
     /// Signs in to Firebase using the ID token from the native Google Sign-In sheet.
     /// The same Google account resolves to the same Firebase uid as on Android.
-    func signInWithGoogle(idToken: String) {
+    func signInWithGoogle(idToken: String, accessToken: String) {
         authState = .loading
-        let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: nil)
+        let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
         auth.signIn(with: credential) { [weak self] _, error in
             guard let self else { return }
             if let error {

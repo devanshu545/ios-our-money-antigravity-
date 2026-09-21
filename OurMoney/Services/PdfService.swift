@@ -458,10 +458,10 @@ enum PdfService {
         // Header
         colorBackground.setFill()
         UIBezierPath(rect: CGRect(x: margin, y: cursor.y - 12, width: pageWidth - margin, height: 20)).fill()
-        draw("Date", colDate, 10, colorTextSecondary, true)
-        draw("Category", colCat, 10, colorTextSecondary, true)
-        draw("Notes", colDesc, 10, colorTextSecondary, true)
-        draw("Paid By", colPaid, 10, colorTextSecondary, true)
+        draw("Date", colDate, 10, colorTextSecondary, true, .left)
+        draw("Category", colCat, 10, colorTextSecondary, true, .left)
+        draw("Notes", colDesc, 10, colorTextSecondary, true, .left)
+        draw("Paid By", colPaid, 10, colorTextSecondary, true, .left)
         draw("Amount", colAmt, 10, colorTextSecondary, true, .right)
         cursor.y += 20
 
@@ -476,10 +476,10 @@ enum PdfService {
             let notesStr = tx.notes.isEmpty ? "-" : (tx.notes.count > 18 ? String(tx.notes.prefix(16)) + ".." : tx.notes)
             let paidStr = tx.paidBy == currentUser.id ? "You" : (partnerUser?.name ?? "Partner")
             let amtColor: UIColor = tx.type == .expense ? colorTextPrimary : colorSuccess
-            draw(dateStr, colDate, 10, colorTextPrimary, false)
-            draw(catStr, colCat, 10, colorTextPrimary, false)
-            draw(notesStr, colDesc, 10, colorTextPrimary, false)
-            draw(paidStr, colPaid, 10, colorTextPrimary, false)
+            draw(dateStr, colDate, 10, colorTextPrimary, false, .left)
+            draw(catStr, colCat, 10, colorTextPrimary, false, .left)
+            draw(notesStr, colDesc, 10, colorTextPrimary, false, .left)
+            draw(paidStr, colPaid, 10, colorTextPrimary, false, .left)
             draw(Formatters.formatRupees(tx.amountPaise), colAmt, 10, amtColor, true, .right)
             cursor.y += 24
         }

@@ -151,7 +151,7 @@ struct SettleUpView: View {
                             .font(.subheadline.weight(.bold))
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        Button(role: .destructive) { deleteTarget = s } label: { Label("Delete", systemImage: "trash") }
+                        Button(role: .destructive) { viewModel.deleteSettlement(settlementId: s.id, onSuccess: {}) } label: { Label("Delete", systemImage: "trash") }
                     }
                 }
             }

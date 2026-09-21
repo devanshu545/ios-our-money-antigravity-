@@ -67,9 +67,9 @@ final class HistoryViewModel: ObservableObject {
                         paidBy: s.paidBy,
                         createdBy: s.createdBy,
                         personal: false,
+                        notes: s.notes,
                         type: .transfer,
-                        paymentMethod: s.paymentMethod,
-                        notes: s.notes
+                        paymentMethod: s.paymentMethod
                     )
                 }
                 let combined = (txs + mappedSets).sorted { $0.dateMillis > $1.dateMillis }
