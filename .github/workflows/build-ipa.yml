@@ -78,13 +78,11 @@ jobs:
           echo "IPA structure verified" >> ../post-build-log.txt
           exit 0
 
-      - name: Upload IPA to BashUpload
+      - name: Upload IPA to Repo
         run: |
           set +e
-          curl --upload-file build/OurMoney.ipa https://transfer.sh/OurMoney.ipa > ipa-link.txt
-          cat ipa-link.txt >> post-build-log.txt
-          git add post-build-log.txt ipa-link.txt
-          git commit -m "Upload IPA link and post-build log"
+          git add build/OurMoney.ipa
+          git commit -m "Upload IPA binary"
           git push
 
       - name: Upload IPA artifact
