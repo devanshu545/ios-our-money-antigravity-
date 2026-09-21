@@ -34,6 +34,7 @@ targets:
         products:
           - FirebaseAuth
           - FirebaseFirestore
+          - FirebaseFirestoreSwift
       - package: GoogleSignIn
         products:
           - GoogleSignIn
@@ -49,7 +50,7 @@ targets:
 packages:
   FirebaseiOS:
     url: https://github.com/firebase/firebase-ios-sdk.git
-    from: 11.0.0
+    from: 10.29.0
   GoogleSignIn:
     url: https://github.com/google/GoogleSignIn-iOS.git
     from: 7.1.0
