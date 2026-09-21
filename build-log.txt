@@ -10,7 +10,7 @@ Build settings from command line:
     CODE_SIGNING_ALLOWED = NO
     CODE_SIGNING_REQUIRED = NO
 
-2026-09-21 15:37:10.510 xcodebuild[1221:6006] Writing error result bundle to /var/folders/s6/5hzmn6lx4dz5nxs7k_0slzph0000gn/T/ResultBundle_2026-21-09_15-37-0010.xcresult
+2026-09-21 15:39:16.217 xcodebuild[9876:29632] Writing error result bundle to /var/folders/s6/5hzmn6lx4dz5nxs7k_0slzph0000gn/T/ResultBundle_2026-21-09_15-39-0016.xcresult
 xcodebuild: error: Unable to read project 'OurMoney.xcodeproj'.
 	Reason: The project ‘OurMoney’ cannot be opened because it is in a future Xcode project file format (77). Adjust the project format using a compatible version of Xcode to allow it to be opened by this version of Xcode.
 
