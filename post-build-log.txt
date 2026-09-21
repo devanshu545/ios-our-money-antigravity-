@@ -1,0 +1,24 @@
+derived_data/Build/Products/Release-iphoneos/OurMoney.app
+-rw-r--r--  1 runner  staff  7102052 Sep 21 17:02 OurMoney.ipa
+Archive:  OurMoney.ipa
+  Length      Date    Time    Name
+---------  ---------- -----   ----
+        0  09-21-2026 17:02   Payload/
+        0  09-21-2026 17:02   Payload/OurMoney.app/
+        0  09-21-2026 17:02   Payload/OurMoney.app/Firebase_FirebaseCore.bundle/
+      855  09-21-2026 17:02   Payload/OurMoney.app/Firebase_FirebaseCore.bundle/PrivacyInfo.xcprivacy
+      687  09-21-2026 17:02   Payload/OurMoney.app/Firebase_FirebaseCore.bundle/Info.plist
+        0  09-21-2026 17:02   Payload/OurMoney.app/gRPC_grpcppWrapper.bundle/
+      817  09-21-2026 17:02   Payload/OurMoney.app/gRPC_grpcppWrapper.bundle/PrivacyInfo.xcprivacy
+      681  09-21-2026 17:02   Payload/OurMoney.app/gRPC_grpcppWrapper.bundle/Info.plist
+        0  09-21-2026 17:02   Payload/OurMoney.app/GTMSessionFetcher_GTMSessionFetcherCore.bundle/
+      598  09-21-2026 17:02   Payload/OurMoney.app/GTMSessionFetcher_GTMSessionFetcherCore.bundle/PrivacyInfo.xcprivacy
+      723  09-21-2026 17:02   Payload/OurMoney.app/GTMSessionFetcher_GTMSessionFetcherCore.bundle/Info.plist
+        0  09-21-2026 17:02   Payload/OurMoney.app/leveldb_leveldb.bundle/
+      856  09-21-2026 17:02   Payload/OurMoney.app/leveldb_leveldb.bundle/PrivacyInfo.xcprivacy
+      675  09-21-2026 17:02   Payload/OurMoney.app/leveldb_leveldb.bundle/Info.plist
+        0  09-21-2026 17:02   Payload/OurMoney.app/GoogleSignIn_GoogleSignIn.bundle/
+        0  09-21-2026 17:02   Payload/OurMoney.app/GoogleSignIn_GoogleSignIn.bundle/de.lproj/
+     1703  09-21-2026 17:02   Payload/OurMoney.app/GoogleSignIn_GoogleSignIn.bundle/de.lproj/GoogleSignIn.strings
+Payload/OurMoney.app/OurMoney: Mach-O 64-bit executable arm64
+IPA structure verified
