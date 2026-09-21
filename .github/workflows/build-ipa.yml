@@ -24,26 +24,25 @@ jobs:
       - name: Show Xcode version
         run: xcodebuild -version
 
-      - name: Build device archive (unsigned)
+      - name: Build device app (unsigned)
         run: |
           set -o pipefail
-          xcodebuild archive \
+          xcodebuild build \
             -project OurMoney.xcodeproj \
             -scheme OurMoney \
             -configuration Release \
             -destination 'generic/platform=iOS' \
-            -archivePath build/OurMoney.xcarchive \
+            -derivedDataPath derived_data \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
-            AD_HOC_CODE_SIGNING_ALLOWED=YES \
             -quiet
 
       - name: Package unsigned IPA
-        working-directory: build
         run: |
-          mkdir -p Payload
-          cp -R OurMoney.xcarchive/Products/Applications/OurMoney.app Payload/
+          mkdir -p build/Payload
+          cp -R derived_data/Build/Products/Release-iphoneos/OurMoney.app build/Payload/
+          cd build
           zip -qry OurMoney.ipa Payload
           ls -la OurMoney.ipa
           unzip -l OurMoney.ipa | head -20
