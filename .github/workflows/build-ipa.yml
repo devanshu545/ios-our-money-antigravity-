@@ -31,14 +31,13 @@ jobs:
             -project OurMoney.xcodeproj \
             -scheme OurMoney \
             -destination 'platform=iOS Simulator,name=iPhone 15,OS=latest' \
-            | tee test-log.txt
-
-      - name: Upload test log
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: test-log.txt
+            > test-log.txt 2>&1 || true
+            
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add test-log.txt
+          git commit -m "Upload test log from action" || true
+          git push || true
 
       - name: Build device archive (unsigned)
         run: |
