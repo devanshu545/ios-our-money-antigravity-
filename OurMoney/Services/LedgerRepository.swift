@@ -202,7 +202,7 @@ final class LedgerRepository: ObservableObject {
         var newTransaction = transaction
         newTransaction.createdBy = currentUserId
         let ref = householdRef.collection("transactions").document(newTransaction.id)
-        Task { [ref] in
+        Task { [ref, newTransaction] in
             do { try await ref.setData(from: newTransaction) }
             catch { await MainActor.run { self.listenError = error.localizedDescription } }
         }
@@ -231,7 +231,7 @@ final class LedgerRepository: ObservableObject {
         var newSettlement = settlement
         newSettlement.createdBy = currentUserId
         let ref = householdRef.collection("settlements").document(newSettlement.id)
-        Task { [ref] in
+        Task { [ref, newSettlement] in
             do { try await ref.setData(from: newSettlement) }
             catch { await MainActor.run { self.listenError = error.localizedDescription } }
         }
@@ -255,7 +255,7 @@ final class LedgerRepository: ObservableObject {
         var newGoal = goal
         newGoal.createdBy = currentUserId
         let ref = householdRef.collection("goals").document(newGoal.id)
-        Task { [ref] in
+        Task { [ref, newGoal] in
             do { try await ref.setData(from: newGoal) }
             catch { await MainActor.run { self.listenError = error.localizedDescription } }
         }
@@ -279,7 +279,7 @@ final class LedgerRepository: ObservableObject {
         var newBudget = budget
         newBudget.createdBy = currentUserId
         let ref = householdRef.collection("budgets").document(newBudget.id)
-        Task { [ref] in
+        Task { [ref, newBudget] in
             do { try await ref.setData(from: newBudget) }
             catch { await MainActor.run { self.listenError = error.localizedDescription } }
         }
@@ -304,7 +304,7 @@ final class LedgerRepository: ObservableObject {
         guard !trimmed.isEmpty else { return }
         let category = CustomCategory(name: trimmed, createdBy: currentUserId)
         let ref = householdRef.collection("categories").document(category.id)
-        Task { [ref] in
+        Task { [ref, category] in
             do { try await ref.setData(from: category) }
             catch { await MainActor.run { self.listenError = error.localizedDescription } }
         }

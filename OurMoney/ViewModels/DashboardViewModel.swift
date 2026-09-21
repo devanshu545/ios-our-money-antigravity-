@@ -34,10 +34,11 @@ final class DashboardViewModel: ObservableObject {
         // Fetch partner profile once (same as Android's suspend getUser).
         if !partnerId.isEmpty {
             Task { [weak self] in
+                guard let self else { return }
                 let partner = await UserRepository().getUserSuspend(partnerId)
                 await MainActor.run {
-                    self?.state.partnerUser = partner
-                    self?.state.isLoading = false
+                    self.state.partnerUser = partner
+                    self.state.isLoading = false
                 }
             }
         }

@@ -43,9 +43,10 @@ final class AddExpenseViewModel: ObservableObject {
 
         if !otherUserId.isEmpty {
             Task { [weak self] in
+                guard let self else { return }
                 let partner = await UserRepository().getUserSuspend(otherUserId)
                 if let partner, !partner.name.isEmpty {
-                    await MainActor.run { self?.partnerName = partner.name }
+                    await MainActor.run { self.partnerName = partner.name }
                 }
             }
         }

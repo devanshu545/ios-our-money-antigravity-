@@ -43,8 +43,9 @@ final class HistoryViewModel: ObservableObject {
         let partnerId = household.members.first { $0 != currentUser.id } ?? ""
         if !partnerId.isEmpty {
             Task { [weak self] in
+                guard let self else { return }
                 let partner = await UserRepository().getUserSuspend(partnerId)
-                await MainActor.run { self?.partnerUser = partner }
+                await MainActor.run { self.partnerUser = partner }
             }
         }
 

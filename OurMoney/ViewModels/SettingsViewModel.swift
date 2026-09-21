@@ -24,9 +24,10 @@ final class SettingsViewModel: ObservableObject {
         let partnerId = household.members.first { $0 != currentUser.id } ?? ""
         if !partnerId.isEmpty {
             Task { [weak self] in
+                guard let self else { return }
                 let partner = await UserRepository().getUserSuspend(partnerId)
                 if let partner, !partner.name.isEmpty {
-                    await MainActor.run { self?.partnerName = partner.name }
+                    await MainActor.run { self.partnerName = partner.name }
                 }
             }
         }

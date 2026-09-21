@@ -124,7 +124,8 @@ final class AiViewModel: ObservableObject {
         messagesListener?.remove()
         currentChatId = chatId
         messagesListener = aiRepository.listenMessages(chatId: chatId) { [weak self] messages in
-            Task { @MainActor in self?.currentMessages = messages }
+            guard let self else { return }
+            Task { @MainActor in self.currentMessages = messages }
         }
     }
 
