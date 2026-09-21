@@ -34,7 +34,6 @@ targets:
         products:
           - FirebaseAuth
           - FirebaseFirestore
-          - FirebaseFirestoreSwift
       - package: GoogleSignIn
         products:
           - GoogleSignIn
