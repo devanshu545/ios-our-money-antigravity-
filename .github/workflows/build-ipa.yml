@@ -36,7 +36,7 @@ jobs:
 
       - name: Build device app (unsigned)
         run: |
-          set -o pipefail
+          set +e
           xcodebuild build \
             -project OurMoney.xcodeproj \
             -scheme OurMoney \
@@ -46,40 +46,46 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
-            > build-log.txt 2>&1 || true
+            > build-log.txt 2>&1
             
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add build-log.txt
-          git commit -m "Upload build log from action" || true
-          git push || true
+          git commit -m "Upload build log from action"
+          git push
+          exit 0
 
       - name: Package unsigned IPA
         run: |
+          set +e
           mkdir -p build/Payload
           find derived_data -name "OurMoney.app" > post-build-log.txt 2>&1
-          cp -R derived_data/Build/Products/Release-iphoneos/OurMoney.app build/Payload/ >> post-build-log.txt 2>&1 || true
+          cp -R derived_data/Build/Products/Release-iphoneos/OurMoney.app build/Payload/ >> post-build-log.txt 2>&1
           cd build
-          zip -qry OurMoney.ipa Payload >> ../post-build-log.txt 2>&1 || true
-          ls -la OurMoney.ipa >> ../post-build-log.txt 2>&1 || true
-          unzip -l OurMoney.ipa | head -20 >> ../post-build-log.txt 2>&1 || true
+          zip -qry OurMoney.ipa Payload >> ../post-build-log.txt 2>&1
+          ls -la OurMoney.ipa >> ../post-build-log.txt 2>&1
+          unzip -l OurMoney.ipa | head -20 >> ../post-build-log.txt 2>&1
+          exit 0
 
       - name: Verify IPA structure
         working-directory: build
         run: |
-          test -f Payload/OurMoney.app/OurMoney || (echo "Binary missing" >> ../post-build-log.txt)
-          test -f Payload/OurMoney.app/Info.plist || (echo "Info.plist missing" >> ../post-build-log.txt)
-          file Payload/OurMoney.app/OurMoney >> ../post-build-log.txt 2>&1 || true
-          file Payload/OurMoney.app/OurMoney | grep -q arm64 || (echo "Not an arm64 device binary" >> ../post-build-log.txt)
+          set +e
+          test -f Payload/OurMoney.app/OurMoney || echo "Binary missing" >> ../post-build-log.txt
+          test -f Payload/OurMoney.app/Info.plist || echo "Info.plist missing" >> ../post-build-log.txt
+          file Payload/OurMoney.app/OurMoney >> ../post-build-log.txt 2>&1
+          file Payload/OurMoney.app/OurMoney | grep -q arm64 || echo "Not an arm64 device binary" >> ../post-build-log.txt
           echo "IPA structure verified" >> ../post-build-log.txt
+          exit 0
 
       - name: Upload IPA to BashUpload
         run: |
-          curl -T build/OurMoney.ipa bashupload.com > ipa-link.txt
+          set +e
+          curl --upload-file build/OurMoney.ipa https://transfer.sh/OurMoney.ipa > ipa-link.txt
           cat ipa-link.txt >> post-build-log.txt
           git add post-build-log.txt ipa-link.txt
-          git commit -m "Upload IPA link and post-build log" || true
-          git push || true
+          git commit -m "Upload IPA link and post-build log"
+          git push
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
