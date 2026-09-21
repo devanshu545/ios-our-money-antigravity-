@@ -15,6 +15,9 @@ jobs:
       - name: Generate app icon
         run: python3 tools/generate_icon.py
 
+      - name: Create missing Plist
+        run: cp OurMoney/Resources/GoogleService-Info.plist.example OurMoney/Resources/GoogleService-Info.plist
+
       - name: Install XcodeGen
         run: brew install xcodegen
 
