@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -25,9 +25,7 @@ jobs:
         run: brew install xcodegen
 
       - name: Generate Xcode project
-        run: |
-          xcodegen generate
-          sed -i '' 's/objectVersion = 77;/objectVersion = 56;/g' OurMoney.xcodeproj/project.pbxproj
+        run: xcodegen generate
 
       - name: Show Xcode version
         run: xcodebuild -version
