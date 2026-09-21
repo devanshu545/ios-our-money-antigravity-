@@ -25,7 +25,9 @@ jobs:
         run: brew install xcodegen
 
       - name: Generate Xcode project
-        run: xcodegen generate
+        run: |
+          xcodegen generate
+          sed -i '' 's/objectVersion = 77;/objectVersion = 56;/g' OurMoney.xcodeproj/project.pbxproj
 
       - name: Show Xcode version
         run: xcodebuild -version
