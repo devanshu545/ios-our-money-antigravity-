@@ -23,7 +23,8 @@ final class LedgerCalculatorTests: XCTestCase {
             personal: personal,
             splitMethod: method,
             splits: splits,
-            type: type
+            type: type,
+            isDeleted: deleted
         )
     }
 
