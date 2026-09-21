@@ -36,7 +36,13 @@ jobs:
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
-            -quiet
+            > build-log.txt 2>&1 || true
+            
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add build-log.txt
+          git commit -m "Upload build log from action" || true
+          git push || true
 
       - name: Package unsigned IPA
         run: |
