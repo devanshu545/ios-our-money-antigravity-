@@ -24,7 +24,6 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.devanshu.ourmoney.ios
-        CODE_SIGN_ENTITLEMENTS: OurMoney/Resources/OurMoney.entitlements
         GENERATE_INFOPLIST_FILE: NO
         # GEMINI_API_KEY is injected via the environment at build time
         # (GitHub Actions secret / local .env). Never hardcode it.
